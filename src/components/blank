@@ -1,0 +1,63 @@
+import React, { useRef, useState } from "react";
+
+const SimpleInput = (props) => {
+  const [enteredName, setenteredName] = useState("");
+  const [enteredNamevaled, setenteredNamevalid] = useState(false);
+
+
+
+
+  const handelnameinput = (e) => {
+    setenteredName(e.target.value);
+
+    if (enteredName.length !== 0) {
+      setenteredNamevalid(false);
+      return;
+    }
+  };
+
+  const handelblur = (e) => {
+    setenteredNamevalid(true);
+  };
+
+  const handelSubmit = (e) => {
+    e.preventDefault();
+
+    if (enteredName.length === 0) {
+      setenteredNamevalid(true);
+      return;
+    }
+
+    console.log(enteredName);
+
+    setenteredName("");
+  };
+
+  const validationstyle = !enteredNamevaled 
+    ? "form-control"
+    : "form-control invalid";
+
+  return (
+    <form onSubmit={handelSubmit}>
+      <div className={validationstyle}>
+        <label htmlFor="name">Your Name</label>
+        <input
+          type="text"
+          id="name"
+          onChange={handelnameinput}
+          onBlur={handelblur}
+          value={enteredName}
+        />
+
+        {enteredNamevaled && (
+          <p className="error-text">Name can't be emgty ...</p>
+        )}
+      </div>
+      <div className="form-actions">
+        <button>Submit</button>
+      </div>
+    </form>
+  );
+};
+
+export default SimpleInput;
